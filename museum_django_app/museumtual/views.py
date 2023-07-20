@@ -6,12 +6,32 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import ListAPIView
 from .models import Museumtual
+from .models import Profile
 from .serializers import MuseumtualSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from .serializers import ProfileSerializer
 from rest_framework.response import Response
+from .serializers import CartSerializer
+from .models import Cart
+
 
 # Create your views here.
+
+class ProfileDeleteView(DestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileUpdateView(UpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer  
+
+
+class ProfileCreateView(CreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer      
+
+
 
 class MuseumtualListCreate(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -60,3 +80,26 @@ class MuseumtualCreateView(CreateAPIView):
             return Museumtual.objects.filter(owner = user)
         serializer_class = MuseumtualSerializer
 
+
+
+class CartCreateView:
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+   
+    
+     
+class CartListView(ListAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+
+class CartDeleteView(DestroyAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+
+class CartUpdateView(UpdateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+        
+        
