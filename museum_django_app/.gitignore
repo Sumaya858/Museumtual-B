@@ -19,6 +19,7 @@ build/
 
 # Ignore environment variables
 .env 
+*.env 
 
 # Logs and temporary files
 *.log
