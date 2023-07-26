@@ -10,13 +10,7 @@ from token_auth.models import User
 # Models Profile
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-    def __str__(self):
-        return f'{self.user.username} Profile'
-    
 
 # Cart
 class Cart(models.Model):
@@ -24,7 +18,8 @@ class Cart(models.Model):
     MUSEUM_CHOICES = [
         (' ', " "),
         ('acropolis', "Acropolis"),
-        ('egypt', "Egypt"),
+        ('saudi', "Saudi"),
+        ('harvard', "Harvard"),
 
     ]
     museum_choice = models.CharField(max_length=100, choices=MUSEUM_CHOICES, default='other')
@@ -53,3 +48,21 @@ class Museumtual(models.Model):
 
     def __str__(self):
         return f'{self.name} from {self.origin}'
+
+class Book(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    museum_id = models.ManyToManyField(Museumtual, related_name='museum_id', blank=True)
+
+    def __str__(self):
+        return f'{self.user_id} Book'
+    
+
+
+class Museum(models.Model):
+    name = models.CharField(max_length=20)
+    origin = models.CharField(max_length=50)
+    image = models.CharField(max_length=500)
+    owner = models.ForeignKey(User, related_name='museumuser', on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return f'{self.name}'
